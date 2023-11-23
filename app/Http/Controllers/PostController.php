@@ -39,7 +39,7 @@ class PostController extends Controller
             'content' => request()->get('content'),
         ]);
 
-        return redirect('/posts');
+        return to_route('posts.index');
     }
 
     public function show($id): View|Application|Factory|ContractsApplication
@@ -68,13 +68,13 @@ class PostController extends Controller
             'content' => request()->get('content'),
         ]);
 
-        return redirect('/posts/' . $id);
+        return to_route('posts.show', ['id' => $id]);
     }
 
     public function destroy($id): Application|Redirector|RedirectResponse|ContractsApplication
     {
         DB::table('posts')->where('id', '=', $id)->delete();
 
-        return redirect('/posts');
+        return to_route('posts.index');
     }
 }

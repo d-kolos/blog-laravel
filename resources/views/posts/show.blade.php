@@ -7,9 +7,9 @@
     <p><b>{{ $post->content }}</b></p>
     <div class="row">
         <div class="col-md-6">
-            <a class="btn btn-warning" href="/posts/{{ $post->id }}/edit">Edit</a>
+            <a class="btn btn-warning" href="{{ route('posts.edit', ['id' => $post->id]) }}">Edit</a>
         </div>
-        <form action="/posts/{{ $post->id }}" method="post" class="col-md-6">
+        <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="post" class="col-md-6">
             @csrf
             @method('delete')
             <button class="btn btn-danger btn-sm">Delete</button>
