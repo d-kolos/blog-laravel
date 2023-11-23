@@ -41,17 +41,13 @@ class PostController extends Controller
         return to_route('posts.index');
     }
 
-    public function show($id): View|Application|Factory|ContractsApplication
+    public function show(Post $post): View|Application|Factory|ContractsApplication
     {
-        $post = Post::where('id', '=', $id)->first();
-
         return view('posts.show', compact('post'));
     }
 
-    public function edit($id): View|Application|Factory|ContractsApplication
+    public function edit(Post $post): View|Application|Factory|ContractsApplication
     {
-        $post = Post::where('id', '=', $id)->first();
-
         return view('posts.edit', compact('post'));
     }
 
@@ -59,20 +55,20 @@ class PostController extends Controller
      * @throws ContainerExceptionInterface
      * @throws NotFoundExceptionInterface
      */
-    public function update($id): Application|Redirector|RedirectResponse|ContractsApplication
+    public function update(Post $post): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        Post::where('id', '=', $id)->update([
+        $post->update([
             'title' => request()->title,
             'description' => request()->description,
             'content' => request()->get('content'),
         ]);
 
-        return to_route('posts.show', compact('id'));
+        return to_route('posts.show', compact('post'));
     }
 
-    public function destroy($id): Application|Redirector|RedirectResponse|ContractsApplication
+    public function destroy(Post $post): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        Post::where('id', '=', $id)->delete();
+        $post->delete();
 
         return to_route('posts.index');
     }
