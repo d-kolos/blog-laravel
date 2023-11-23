@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
-//use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Facades\DB;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 
@@ -17,9 +16,9 @@ class PostController extends Controller
 {
     public function index(): View|Application|Factory|ContractsApplication
     {
-        $posts = DB::table('posts')->get();
+        $posts = Post::all();
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', compact('posts'));
     }
 
     public function create(): View|Application|Factory|ContractsApplication
@@ -33,7 +32,7 @@ class PostController extends Controller
      */
     public function store(): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        DB::table('posts')->insert([
+        Post::insert([
             'title' => request()->title,
             'description' => request()->description,
             'content' => request()->get('content'),
@@ -44,16 +43,16 @@ class PostController extends Controller
 
     public function show($id): View|Application|Factory|ContractsApplication
     {
-        $post = DB::table('posts')->where('id', '=', $id)->first();
+        $post = Post::where('id', '=', $id)->first();
 
-        return view('posts.show', ['post' => $post]);
+        return view('posts.show', compact('post'));
     }
 
     public function edit($id): View|Application|Factory|ContractsApplication
     {
-        $post = DB::table('posts')->where('id', '=', $id)->first();
+        $post = Post::where('id', '=', $id)->first();
 
-        return view('posts.edit', ['post' => $post]);
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -62,18 +61,18 @@ class PostController extends Controller
      */
     public function update($id): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        DB::table('posts')->where('id', '=', $id)->update([
+        Post::where('id', '=', $id)->update([
             'title' => request()->title,
             'description' => request()->description,
             'content' => request()->get('content'),
         ]);
 
-        return to_route('posts.show', ['id' => $id]);
+        return to_route('posts.show', compact('id'));
     }
 
     public function destroy($id): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        DB::table('posts')->where('id', '=', $id)->delete();
+        Post::where('id', '=', $id)->delete();
 
         return to_route('posts.index');
     }
