@@ -29,9 +29,9 @@ class PostController extends Controller
 
     public function store(StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        Post::insert($request->validated());
+        $post = Post::create($request->validated());
 
-        return to_route('posts.index');
+        return to_route('posts.show', compact('post'));
     }
 
     public function show(Post $post): View|Application|Factory|ContractsApplication

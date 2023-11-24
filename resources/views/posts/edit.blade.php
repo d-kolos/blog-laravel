@@ -7,21 +7,7 @@
         @csrf
         @method('put')
         <p>#{{ $post->id }}</p>
-        <div class="form-group">
-            <label for="title">Title</label>
-            <input id="title" type="text" name="title" value="{{ $post->title }}"
-                   class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea id="description" type="text" name="description"
-                      class="form-control">{{ $post->description }}</textarea>
-        </div>
-        <div class="form-group">
-            <label for="content">Content</label>
-            <textarea id="content" type="text" name="content" rows="7"
-                      class="form-control">{{ $post->content }}</textarea>
-        </div>
+        <x-posts.fields :post="$post" />
         <button class="btn btn-success my-4">Update</button>
     </form>
 </x-layouts.main>
