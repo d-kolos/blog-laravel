@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Posts\StoreRequest;
 use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -26,17 +27,9 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function store(): Application|Redirector|RedirectResponse|ContractsApplication
+    public function store(StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        Post::insert([
-            'title' => request()->title,
-            'description' => request()->description,
-            'content' => request()->get('content'),
-        ]);
+        Post::insert($request->validated());
 
         return to_route('posts.index');
     }
@@ -51,17 +44,9 @@ class PostController extends Controller
         return view('posts.edit', compact('post'));
     }
 
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function update(Post $post): Application|Redirector|RedirectResponse|ContractsApplication
+    public function update(Post $post, StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        $post->update([
-            'title' => request()->title,
-            'description' => request()->description,
-            'content' => request()->get('content'),
-        ]);
+        $post->update($request->validated());
 
         return to_route('posts.show', compact('post'));
     }
