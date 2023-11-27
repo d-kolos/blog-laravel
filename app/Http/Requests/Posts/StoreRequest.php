@@ -26,6 +26,19 @@ class StoreRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:5000',
             'content' => 'required|string|max:5000',
+            'category_id' => 'required|int|exists:App\Models\Category,id',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'title.required' => 'Title is the face of your post',
         ];
     }
 }

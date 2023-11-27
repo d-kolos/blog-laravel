@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\StoreRequest;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -24,7 +25,9 @@ class PostController extends Controller
 
     public function create(): View|Application|Factory|ContractsApplication
     {
-        return view('posts.create');
+        $categories = Category::all();
+
+        return view('posts.create', compact('categories'));
     }
 
     public function store(StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
@@ -41,7 +44,9 @@ class PostController extends Controller
 
     public function edit(Post $post): View|Application|Factory|ContractsApplication
     {
-        return view('posts.edit', compact('post'));
+        $categories = Category::all();
+
+        return view('posts.edit', compact(['post', 'categories']));
     }
 
     public function update(Post $post, StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
