@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\StoreRequest;
-use App\Models\Category;
+//use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -11,8 +11,8 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
+//use Psr\Container\ContainerExceptionInterface;
+//use Psr\Container\NotFoundExceptionInterface;
 
 class PostController extends Controller
 {
@@ -25,9 +25,7 @@ class PostController extends Controller
 
     public function create(): View|Application|Factory|ContractsApplication
     {
-        $categories = Category::all();
-
-        return view('posts.create', compact('categories'));
+        return view('posts.create');
     }
 
     public function store(StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
@@ -44,9 +42,7 @@ class PostController extends Controller
 
     public function edit(Post $post): View|Application|Factory|ContractsApplication
     {
-        $categories = Category::all();
-
-        return view('posts.edit', compact(['post', 'categories']));
+        return view('posts.edit', compact('post'));
     }
 
     public function update(Post $post, StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
