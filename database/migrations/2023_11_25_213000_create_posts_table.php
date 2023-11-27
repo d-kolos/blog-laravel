@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->text('content');
+            $table->foreignIdFor(\App\Models\Category::class)
+                  ->constrained()->onDelete('restrict');
             $table->timestamps();
         });
     }
