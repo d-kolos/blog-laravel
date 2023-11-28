@@ -7,5 +7,23 @@
             <a href="{{ route('posts.create') }}"
                class="nav-link @if(request()->routeIs('posts.create')) active @endif">Create Post</a>
         </li>
+        @guest
+            <li class="nav-item">
+                <a href="{{ route('login') }}"
+                   class="nav-link @if(request()->routeIs('login')) active @endif">Login</a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('register') }}"
+                   class="nav-link @if(request()->routeIs('register')) active @endif">Registration</a>
+            </li>
+        @endguest
+        @auth()
+            <li class="nav-item">
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button class="nav-link @if(request()->routeIs('logout')) active @endif">Logout</button>
+                </form>
+            </li>
+        @endauth
     </ul>
 </header>
