@@ -2,7 +2,8 @@
 /** @var stdClass $post */
  ?>
 <x-layouts.main title="Site | {{ $post->title }}">
-    <p>{{ $post->category->title }}</p>
+    <p><strong>Author: {{ $post->user->name }}</strong></p>
+    <p>Category {{ $post->category->title }}</p>
     <h1><small>#{{ $post->id }}:</small> {{ $post->title }}</h1>
     <p>{{ $post->description }}</p>
     <p><b>{{ $post->content }}</b></p>

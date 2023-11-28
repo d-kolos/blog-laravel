@@ -27,7 +27,15 @@ class StoreRequest extends FormRequest
             'description' => 'required|string|max:5000',
             'content' => 'required|string|max:5000',
             'category_id' => 'required|int|exists:App\Models\Category,id',
+            'user_id' => 'required|int|exists:App\Models\User,id',
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'user_id' => auth()->id(),
+        ]);
     }
 
     /**

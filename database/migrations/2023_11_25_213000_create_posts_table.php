@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +18,9 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->text('content');
-            $table->foreignIdFor(\App\Models\Category::class)
+            $table->foreignIdFor(Category::class)
+                  ->constrained()->onDelete('restrict');
+            $table->foreignIdFor(User::class)
                   ->constrained()->onDelete('restrict');
             $table->timestamps();
         });

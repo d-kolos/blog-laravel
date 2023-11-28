@@ -18,7 +18,7 @@ class PostController extends Controller
 {
     public function index(): View|Application|Factory|ContractsApplication
     {
-        $posts = Post::with('category')->get();
+        $posts = Post::with(['category', 'user'])->get();
 
         return view('posts.index', compact('posts'));
     }
@@ -37,7 +37,7 @@ class PostController extends Controller
 
     public function show(Post $post): View|Application|Factory|ContractsApplication
     {
-        $post->load('category');
+        $post->load(['category', 'user']);
 
         return view('posts.show', compact('post'));
     }
