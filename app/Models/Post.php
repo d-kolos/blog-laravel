@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'content', 'category_id', 'user_id'];
+    protected $fillable = ['title', 'description', 'content', 'category_id', 'status', 'user_id'];
 
     protected $casts = [
         'status' => PostStatusEnum::class,
@@ -31,6 +31,7 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    /** @noinspection PhpUnused */
     public function scopePublished($query): void
     {
         $query->where('status', PostStatusEnum::PUBLISHED->value);
