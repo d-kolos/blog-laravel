@@ -2,8 +2,10 @@
 /** @var stdClass $post */
  ?>
 <x-layouts.main title="Site | {{ $post->title }}">
+    <div><button class="btn btn-sm {{ $post->status->class() }}">Status: <strong
+            >{{ $post->status->name() }}</strong></button></div>
     <p><strong>Author: {{ $post->user->name }}</strong></p>
-    <p>Category {{ $post->category->title }}</p>
+    <p><small>Category: {{ $post->category->title }}</small></p>
     <h1><small>#{{ $post->id }}:</small> {{ $post->title }}</h1>
     <p>{{ $post->description }}</p>
     <p><b>{{ $post->content }}</b></p>

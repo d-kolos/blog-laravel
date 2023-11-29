@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PostStatusEnum;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->text('content');
+            $table->tinyInteger('status')->default(PostStatusEnum::UNPUBLISHED->value);
             $table->foreignIdFor(Category::class)
                   ->constrained()->onDelete('restrict');
             $table->foreignIdFor(User::class)

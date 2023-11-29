@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Posts;
 
+use App\Enums\PostStatusEnum;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreRequest extends FormRequest
 {
@@ -26,6 +28,7 @@ class StoreRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:5000',
             'content' => 'required|string|max:5000',
+            'status' => ['required', 'string', new Enum(PostStatusEnum::class)],
             'category_id' => 'required|int|exists:App\Models\Category,id',
             'user_id' => 'required|int|exists:App\Models\User,id',
         ];

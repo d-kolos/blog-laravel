@@ -22,6 +22,7 @@ class PostFactory extends Factory
             'description' => fake()->text(),
             'content' => fake()->text(800),
             'category_id' => rand(1, 10),
+            'status' => rand(1, 3),
             'user_id' => rand(1, 10),
         ];
     }

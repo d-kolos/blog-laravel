@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+//use App\Enums\PostStatusEnum;
 use App\Http\Requests\Posts\StoreRequest;
 //use App\Models\Category;
 use App\Models\Post;
@@ -18,7 +19,12 @@ class PostController extends Controller
 {
     public function index(): View|Application|Factory|ContractsApplication
     {
-        $posts = Post::with(['category', 'user'])->get();
+        /** @noinspection PhpUndefinedMethodInspection */
+        $posts = Post::query()
+//                     ->where('status', PostStatusEnum::PUBLISHED->value)
+                     ->published()
+                     ->with(['category', 'user'])
+                     ->get();
 
         return view('posts.index', compact('posts'));
     }
