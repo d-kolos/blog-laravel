@@ -23,7 +23,7 @@ class PostController extends Controller
         $posts = Post::query()
 //                     ->where('status', PostStatusEnum::PUBLISHED->value)
                      ->published()
-                     ->with(['category', 'user'])
+                     ->with(['category', 'user', 'tags'])
                      ->get();
 
         return view('posts.index', compact('posts'));
@@ -43,7 +43,7 @@ class PostController extends Controller
 
     public function show(Post $post): View|Application|Factory|ContractsApplication
     {
-        $post->load(['category', 'user']);
+        $post->load(['category', 'user', 'tags']);
 
         return view('posts.show', compact('post'));
     }

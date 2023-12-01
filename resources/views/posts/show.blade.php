@@ -5,7 +5,18 @@
     <div><button class="btn btn-sm {{ $post->status->class() }}">Status: <strong
             >{{ $post->status->name() }}</strong></button></div>
     <p><strong>Author: {{ $post->user->name }}</strong></p>
-    <p><small>Category: {{ $post->category->title }}</small></p>
+    <div>
+        <small>Category: </small>
+        <button class="btn btn-outline-primary" disabled style="padding: 1px 5px; font-size: 0.7rem;"
+              title="id={{ $post->category->id }}">{{ $post->category->title }}</button>
+    </div>
+    <div>
+        <small>Tags: </small>
+        @foreach($post->tags as $tag)
+            <button class="btn btn-outline-dark" disabled style="padding: 1px 5px; font-size: 0.7rem;"
+            title="id = {{ $tag->id }}">#{{ $tag->title }}</button>
+        @endforeach
+    </div>
     <h1><small>#{{ $post->id }}:</small> {{ $post->title }}</h1>
     <p>{{ $post->description }}</p>
     <p><b>{{ $post->content }}</b></p>
