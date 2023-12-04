@@ -7,8 +7,8 @@
             <x-posts.fields/>
             <x-category-select/>
         </div>
-        <div class="col-md-6 border border-dark" style="border-color: #ddd!important;">
-            aaa
+        <div class="col-md-6">
+            <x-posts.tag-checkboxes />
         </div>
         <button class="btn btn-success my-4">Create</button>
     </form>
