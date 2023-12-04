@@ -6,6 +6,7 @@ use App\Enums\PostStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static insert(array $array)
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'content', 'category_id', 'user_id'];
+    protected $fillable = ['title', 'description', 'content', 'category_id', 'status', 'user_id'];
 
     protected $casts = [
         'status' => PostStatusEnum::class,
@@ -31,6 +32,12 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /** @noinspection PhpUnused */
     public function scopePublished($query): void
     {
         $query->where('status', PostStatusEnum::PUBLISHED->value);

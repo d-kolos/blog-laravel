@@ -1,9 +1,16 @@
 <x-layouts.main title="Site | Create Post">
     <h1>Create Post</h1>
-    <form method="post" action="{{ route('posts.store') }}" class="col-md-6">
+
+    <form method="post" action="{{ route('posts.store') }}" class="row">
         @csrf
-        <x-posts.fields />
-        <x-category-select />
+        <div class="col-md-6">
+            <x-posts.fields/>
+            <x-category-select/>
+        </div>
+        <div class="col-md-6">
+            <x-posts.tag-checkboxes />
+        </div>
         <button class="btn btn-success my-4">Create</button>
     </form>
+
 </x-layouts.main>
