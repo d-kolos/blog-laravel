@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //use App\Enums\PostStatusEnum;
 use App\Http\Requests\Posts\StoreRequest;
 //use App\Models\Category;
+use App\Http\Requests\Tag\TagIdArrayRequest;
 use App\Models\Post;
 use Illuminate\Contracts\Foundation\Application as ContractsApplication;
 use Illuminate\Contracts\View\Factory;
@@ -34,9 +35,13 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
+    public function store(
+        StoreRequest $request,
+        TagIdArrayRequest $tagIdArrayRequest
+    ): Application|Redirector|RedirectResponse|ContractsApplication
     {
         $post = Post::create($request->validated());
+        $post->tags()->attach($tagIdArrayRequest->tags);
 
         return to_route('posts.show', compact('post'));
     }
