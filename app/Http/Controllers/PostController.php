@@ -55,12 +55,25 @@ class PostController extends Controller
 
     public function edit(Post $post): View|Application|Factory|ContractsApplication
     {
+        $post->load(['category', 'tags']);
+
         return view('posts.edit', compact('post'));
     }
 
-    public function update(Post $post, StoreRequest $request): Application|Redirector|RedirectResponse|ContractsApplication
+    public function update(
+        Post $post,
+        StoreRequest $request,
+        TagIdArrayRequest $tagIdArrayRequest
+    ): Application|Redirector|RedirectResponse|ContractsApplication
     {
         $post->update($request->validated());
+/*
+        $post->tags()->detach();
+        $post->tags()->attach($tagIdArrayRequest->tags);
+
+        One method:
+*/
+        $post->tags()->sync($tagIdArrayRequest->tags);
 
         return to_route('posts.show', compact('post'));
     }
