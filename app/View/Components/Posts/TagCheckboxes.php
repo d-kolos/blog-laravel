@@ -11,12 +11,14 @@ use Illuminate\View\Component;
 class TagCheckboxes extends Component
 {
     public Collection $tags;
+    public Collection $currentTags;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(Collection $currentTags = null)
     {
         $this->tags = Tag::all();
+        $this->currentTags = $currentTags;
     }
 
     /**
