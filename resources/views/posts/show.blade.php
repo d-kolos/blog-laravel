@@ -18,6 +18,7 @@
         @endforeach
     </div>
     <h1><small>#{{ $post->id }}:</small> {{ $post->title }}</h1>
+    <img src="{{ asset($post->image) }}" alt="">
     <p>{{ $post->description }}</p>
     <p><b>{{ $post->content }}</b></p>
     <div class="row">
