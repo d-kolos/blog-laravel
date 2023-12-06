@@ -10,5 +10,5 @@
             <x-posts.tag-checkboxes />
         </div>
     </form>
-    <button class="btn btn-success my-4" form="storePostForm">Create</button>
+    <button id="postButton" class="btn btn-success my-4" form="storePostForm" disabled>Create</button>
 </x-layouts.main>
