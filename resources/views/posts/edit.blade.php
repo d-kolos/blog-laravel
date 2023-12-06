@@ -16,7 +16,9 @@ use App\Enums\PostStatusEnum;
                 <label for="status">Status</label>
                 <select name="status" id="status" class="form-control">
                     @foreach(PostStatusEnum::cases() as $status)
-                        <option value="{{ $status->value }}">{{ $status->name() }}</option>
+                        <option value="{{ $status->value }}"
+                            @selected($status->value == $post->status->value)
+                        >{{ $status->name() }}</option>
                     @endforeach
                 </select>
             </div>
@@ -24,7 +26,7 @@ use App\Enums\PostStatusEnum;
             <x-category-select :categoryId="$post->category_id"/>
         </div>
         <div class="col-md-6">
-            <x-posts.tag-checkboxes :currentTags="$post->tags" />
+            <x-posts.tag-checkboxes :currentTags="$post->tags"/>
         </div>
     </form>
     <button id="postButton" class="btn btn-success my-4" form="postUpdateForm" disabled>Update</button>
