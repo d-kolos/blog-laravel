@@ -27,5 +27,5 @@ use App\Enums\PostStatusEnum;
             <x-posts.tag-checkboxes :currentTags="$post->tags" />
         </div>
     </form>
-    <button class="btn btn-success my-4" form="postUpdateForm">Update</button>
+    <button id="postButton" class="btn btn-success my-4" form="postUpdateForm" disabled>Update</button>
 </x-layouts.main>

@@ -23,7 +23,7 @@ class TagIdArrayRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'tags' => 'array',
+            'tags' => 'required|array|min:3|max:5',
             'tags.*' => 'integer|exists:App\Models\Tag,id',
         ];
     }
