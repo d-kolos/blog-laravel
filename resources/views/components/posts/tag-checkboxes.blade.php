@@ -31,5 +31,7 @@
         button.disabled = checkedTagsCount < 3 || checkedTagsCount > 5;
     }
 
-    checkTagsNumber();
+    window.onload = () => {
+        checkTagsNumber();
+    }
 </script>
