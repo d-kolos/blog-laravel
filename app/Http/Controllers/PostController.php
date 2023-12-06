@@ -13,6 +13,9 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 //use Psr\Container\ContainerExceptionInterface;
 //use Psr\Container\NotFoundExceptionInterface;
 
@@ -38,10 +41,19 @@ class PostController extends Controller
     public function store(
         StoreRequest $request,
         TagIdArrayRequest $tagIdArrayRequest
-    ): Application|Redirector|RedirectResponse|ContractsApplication
-    {
-        $post = Post::create($request->validated());
-        $post->tags()->attach($tagIdArrayRequest->tags);
+    ): Application|Redirector|RedirectResponse|ContractsApplication {
+        $post = null;
+        try {
+            DB::beginTransaction();
+            $post = Post::create($request->validated());
+            $post->tags()->attach($tagIdArrayRequest->tags);
+            DB::commit();
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            DB::rollBack();
+
+            return back();
+        }
 
         return to_route('posts.show', compact('post'));
     }
@@ -66,14 +78,24 @@ class PostController extends Controller
         TagIdArrayRequest $tagIdArrayRequest
     ): Application|Redirector|RedirectResponse|ContractsApplication
     {
-        $post->update($request->validated());
-/*
-        $post->tags()->detach();
-        $post->tags()->attach($tagIdArrayRequest->tags);
+        try {
+            DB::beginTransaction();
 
-        One method:
-*/
-        $post->tags()->sync($tagIdArrayRequest->tags);
+            $post->update($request->validated());
+            /*
+                    $post->tags()->detach();
+                    $post->tags()->attach($tagIdArrayRequest->tags);
+
+                    One method:
+            */
+            $post->tags()->sync($tagIdArrayRequest->tags);
+            DB::commit();
+        } catch (\Exception $e) {
+            Log::info($e->getMessage());
+            DB::rollBack();
+
+            return back();
+        }
 
         return to_route('posts.show', compact('post'));
     }
